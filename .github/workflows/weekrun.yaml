@@ -1,0 +1,31 @@
+name: 'running weekend'
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "1 7 * * 5"
+
+       
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: "Set up Python"
+              uses: actions/setup-python@v2
+              with:
+                  python-version: '3.8'
+
+            - name: "安装依赖包"
+              run: pip install -r ./requirements.txt
+
+            - name: "运行 python程序"
+              run: python runxx.py
+              env:
+                  ports_json: ${{ secrets.ports_json }}
+                  xtstoken: ${{ secrets.xtstoken }}
+                  xtstoken_xx: ${{ secrets.xtstoken_xx }}
+
+
